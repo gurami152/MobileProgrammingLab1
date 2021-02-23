@@ -4,10 +4,10 @@
     <string name="question_2">Тихий океан больше, чем Атлантический</string>
     <string name="question_3">Суэцкий канал соединяет Красное море\n с Индийским океаном</string>
     <string name="question_4">Река Нил начинается в Египте</string>
-    <string name="answer_1">false</string>
-    <string name="answer_2">true</string>
-    <string name="answer_3">false</string>
-    <string name="answer_4">false</string>
+    <string name="answer_1">НЕПРАВДА</string>
+    <string name="answer_2">ПРАВДА</string>
+    <string name="answer_3">НЕПРАВДА</string>
+    <string name="answer_4">НЕПРАВДА</string>
     <string name="button_true">Это правда</string>
     <string name="button_false">Это ложь</string>
     <string name="button_next">Следующий</string>

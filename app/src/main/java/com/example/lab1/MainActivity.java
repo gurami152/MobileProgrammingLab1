@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer("true");
+                checkAnswer("ПРАВДА");
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer("false");
+                checkAnswer("НЕПРАВДА");
             }
         });
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -74,15 +74,19 @@ public class MainActivity extends AppCompatActivity {
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
         mTextQuiz.setText(question);
+        mTextQuiz.setTextColor(getResources().getColor(R.color.text));
     }
 
     private void checkAnswer(String userPressedTrue) {
         String  answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
         int messageResId = 0;
+        mTextQuiz.setText(mQuestionBank[mCurrentIndex].ismAnswerTrue());
         if (userPressedTrue.equals(answerIsTrue)) {
+            mTextQuiz.setTextColor(getResources().getColor(R.color.right));
             messageResId = R.string.toast_true;
         } else {
             messageResId = R.string.toast_false;
+            mTextQuiz.setTextColor(getResources().getColor(R.color.unright));
         }
         Toast toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 0);
