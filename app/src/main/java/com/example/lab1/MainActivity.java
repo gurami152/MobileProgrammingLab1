@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static Integer score =0;
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private TextView mTextQuiz;
+    private TextView mScore;
     private Question[] mQuestionBank;
 
     private int mCurrentIndex = 0;
@@ -27,11 +29,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextQuiz = findViewById(R.id.TextQuiz);
+        mScore = findViewById(R.id.textView2);
         mQuestionBank = new Question[]{
-                new Question(R.string.question_1, this.getResources().getString(R.string.answer_1)),
-                new Question(R.string.question_2, this.getResources().getString(R.string.answer_2)),
-                new Question(R.string.question_3, this.getResources().getString(R.string.answer_3)),
-                new Question(R.string.question_4, this.getResources().getString(R.string.answer_4))
+                new Question(R.string.question_1, this.getResources().getString(R.string.answer_1),false),
+                new Question(R.string.question_2, this.getResources().getString(R.string.answer_2),false),
+                new Question(R.string.question_3, this.getResources().getString(R.string.answer_3),false),
+                new Question(R.string.question_4, this.getResources().getString(R.string.answer_4),false)
         };
         updateQuestion();
         addListenerOnClickButtonTrueFalse();
@@ -59,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
+                if(mQuestionBank[mCurrentIndex].isAnswered()){
+                    mNextButton.performClick();
+                }
+                else {
+                    updateQuestion();
+                }
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
                 if (mCurrentIndex < 0) mCurrentIndex = mQuestionBank.length - 1;
-                updateQuestion();
+                if(mQuestionBank[mCurrentIndex].isAnswered()){
+                    mPrevButton.performClick();
+                }
+                else {
+                    updateQuestion();
+                }
             }
         });
     }
@@ -82,13 +95,16 @@ public class MainActivity extends AppCompatActivity {
         String  answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
         int messageResId = 0;
         mTextQuiz.setText(mQuestionBank[mCurrentIndex].ismAnswerTrue());
+        mQuestionBank[mCurrentIndex].setAnswered(true);
         if (userPressedTrue.equals(answerIsTrue)) {
             mTextQuiz.setTextColor(getResources().getColor(R.color.right));
             messageResId = R.string.toast_true;
+            score ++;
         } else {
             messageResId = R.string.toast_false;
             mTextQuiz.setTextColor(getResources().getColor(R.color.unright));
         }
+        mScore.setText(score.toString());
         Toast toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 0);
         toast.show();

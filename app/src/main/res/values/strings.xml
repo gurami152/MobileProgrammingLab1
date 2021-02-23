@@ -14,4 +14,5 @@
     <string name="button_prev">Предыдущий</string>
     <string name="toast_true">Вы ответили правильно! </string>
     <string name="toast_false">Вы ответили неправильно!</string>>
+    <string name="score">Количество правильных ответов</string>>
 </resources>
