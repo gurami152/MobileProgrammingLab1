@@ -16,12 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mNextButton;
     private Button mPrevButton;
     private TextView mTextQuiz;
-    private Question[] mQuestionBank = new Question[]{
-            new Question(R.string.question_1, false),
-            new Question(R.string.question_2, true),
-            new Question(R.string.question_3, false),
-            new Question(R.string.question_4, false)
-    };
+    private Question[] mQuestionBank;
+
     private int mCurrentIndex = 0;
 
     @Override
@@ -29,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextQuiz = findViewById(R.id.TextQuiz);
+        mQuestionBank = new Question[]{
+                new Question(R.string.question_1, this.getResources().getString(R.string.answer_1)),
+                new Question(R.string.question_2, this.getResources().getString(R.string.answer_2)),
+                new Question(R.string.question_3, this.getResources().getString(R.string.answer_3)),
+                new Question(R.string.question_4, this.getResources().getString(R.string.answer_4))
+        };
         updateQuestion();
         addListenerOnClickButtonTrueFalse();
     }
@@ -42,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(true);
+                checkAnswer("true");
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(false);
+                checkAnswer("false");
             }
         });
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -73,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         mTextQuiz.setText(question);
     }
 
-    private void checkAnswer(boolean userPressedTrue) {
-        boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
+    private void checkAnswer(String userPressedTrue) {
+        String  answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
         int messageResId = 0;
-        if (userPressedTrue == answerIsTrue) {
+        if (userPressedTrue.equals(answerIsTrue)) {
             messageResId = R.string.toast_true;
         } else {
             messageResId = R.string.toast_false;

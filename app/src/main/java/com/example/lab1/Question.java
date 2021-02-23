@@ -3,10 +3,11 @@ package com.example.lab1;
 public class Question {
 
     private int mTextResId;
-    private boolean mAnswerTrue;
+    private String mAnswerTrue;
 
-    public Question(int textResId, boolean answerTrue) {
-        mTextResId = textResId;mAnswerTrue = answerTrue;
+    public Question(int textResId, String answerTrue) {
+        mTextResId = textResId;
+        mAnswerTrue = answerTrue;
     }
 
     public int getmTextResId() {
@@ -17,11 +18,11 @@ public class Question {
         this.mTextResId = mTextResId;
     }
 
-    public boolean ismAnswerTrue() {
+    public String ismAnswerTrue() {
         return mAnswerTrue;
     }
 
-    public void setmAnswerTrue(boolean mAnswerTrue) {
+    public void setmAnswerTrue(String mAnswerTrue) {
         this.mAnswerTrue = mAnswerTrue;
     }
 }
