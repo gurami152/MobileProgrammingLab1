@@ -10,10 +10,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
     private static Integer score =0;
+    private static Integer maxAnswers= 5;
+    private static Integer countAnswered = 0;
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
@@ -34,7 +38,13 @@ public class MainActivity extends AppCompatActivity {
                 new Question(R.string.question_1, this.getResources().getString(R.string.answer_1),false),
                 new Question(R.string.question_2, this.getResources().getString(R.string.answer_2),false),
                 new Question(R.string.question_3, this.getResources().getString(R.string.answer_3),false),
-                new Question(R.string.question_4, this.getResources().getString(R.string.answer_4),false)
+                new Question(R.string.question_4, this.getResources().getString(R.string.answer_4),false),
+                new Question(R.string.question_5, this.getResources().getString(R.string.answer_5),false),
+                new Question(R.string.question_6, this.getResources().getString(R.string.answer_6),false),
+                new Question(R.string.question_7, this.getResources().getString(R.string.answer_7),false),
+                new Question(R.string.question_8, this.getResources().getString(R.string.answer_8),false),
+                new Question(R.string.question_9, this.getResources().getString(R.string.answer_9),false),
+                new Question(R.string.question_10, this.getResources().getString(R.string.answer_10),false)
         };
         updateQuestion();
         addListenerOnClickButtonTrueFalse();
@@ -61,25 +71,29 @@ public class MainActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                if(mQuestionBank[mCurrentIndex].isAnswered()){
-                    mNextButton.performClick();
-                }
-                else {
-                    updateQuestion();
+                if(countAnswered < maxAnswers){
+                    Random random = new Random();
+                    mCurrentIndex = random.nextInt(maxAnswers);
+                    if(mQuestionBank[mCurrentIndex].isAnswered()){
+                        mNextButton.performClick();
+                    }
+                    else {
+                        updateQuestion();
+                    }
                 }
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
-                if (mCurrentIndex < 0) mCurrentIndex = mQuestionBank.length - 1;
-                if(mQuestionBank[mCurrentIndex].isAnswered()){
-                    mPrevButton.performClick();
-                }
-                else {
-                    updateQuestion();
+                if(countAnswered < maxAnswers) {
+                    Random random = new Random();
+                    mCurrentIndex = random.nextInt(maxAnswers);
+                    if (mQuestionBank[mCurrentIndex].isAnswered()) {
+                        mPrevButton.performClick();
+                    } else {
+                        updateQuestion();
+                    }
                 }
             }
         });
@@ -96,10 +110,11 @@ public class MainActivity extends AppCompatActivity {
         int messageResId = 0;
         mTextQuiz.setText(mQuestionBank[mCurrentIndex].ismAnswerTrue());
         mQuestionBank[mCurrentIndex].setAnswered(true);
+        countAnswered++;
         if (userPressedTrue.equals(answerIsTrue)) {
             mTextQuiz.setTextColor(getResources().getColor(R.color.right));
             messageResId = R.string.toast_true;
-            score ++;
+            score++;
         } else {
             messageResId = R.string.toast_false;
             mTextQuiz.setTextColor(getResources().getColor(R.color.unright));
