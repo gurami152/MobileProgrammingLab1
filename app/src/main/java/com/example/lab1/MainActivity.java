@@ -1,6 +1,7 @@
 package com.example.lab1;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             messageResId = R.string.toast_false;
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
     }
 }
